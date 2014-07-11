@@ -14,10 +14,8 @@ public class Modulo extends BaseController{
   
   
   @ExceptionHandler(AccesoServiciosException.class)
-	@ResponseBody
-	public void handleAjaxAccesoServiciosException(AccesoServiciosException ex, HttpServletResponse response){		
-		returnAjaxError(ex, response);
-
+  @ResponseBody
+  public void handleAjaxAccesoServiciosException(AccesoServiciosException ex, HttpServletResponse response){		
+		returnAjaxError(ex, response); //está en BaseController
 	}
-
 }
