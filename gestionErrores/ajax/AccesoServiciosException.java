@@ -1,4 +1,4 @@
-package com.bbva.khvd.front.util;
+package com.proyecto.front.util;
 
 /*
  * Ejemplo de clase. Podemos aceptar todo tipo de excepciones
