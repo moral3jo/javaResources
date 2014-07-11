@@ -1,8 +1,6 @@
 package com.proyecto.front.controller;
 
 public class BaseController{
-		PROTECTED
-  
 
 	protected void returnAjaxError(AccesoServiciosException exception, HttpServletResponse response) {
 		String detalleMensaje = obtieneError(exception);
@@ -20,11 +18,14 @@ public class BaseController{
 	}
 	
 	private devolverErrorWeb(String detalleMensaje){
-	  //response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		//ojo! setStatus avisa que hay un error en el servidor. 
+		//En ie8 por ejemplo hace que no llegue a la web el texto enviado.
+		//response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		
 		try {
 			response.getWriter().write(detalleMensaje);
 		} catch (IOException e) {
-			LOGGER.info(Arrays.toString(e.getStackTrace()) );
+			//error de errores...
 		}
 	}
 	
