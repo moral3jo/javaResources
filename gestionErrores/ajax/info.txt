@@ -1,0 +1,5 @@
+1 - llamamos por ajax esperando respuesta json
+2 - Capturamos excepcion en java
+3 - Función personalizada para recuperar o montar texto de error
+4 - devolvemos un string sin formato
+5 - en web falla parseo de json y podemos tratar
