@@ -1,0 +1,21 @@
+<script type="text/javascript">
+function llamadaAjax(urlAjax) {
+  $.ajax({
+    url: urlAjax,
+    dataType: "json",
+    success: function(datosDevueltos){
+      //funcionalidad si todo va bien
+    }
+  	,error: function (xhr, ajaxOptions, thrownError) {
+	    gestionError(xhr, ajaxOptions, thrownError);
+    }
+  });
+}
+
+function gestionError(xhr, ajaxOptions, thrownError){
+  
+}
+
+
+	
+<script>
