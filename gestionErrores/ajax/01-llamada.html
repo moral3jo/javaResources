@@ -13,9 +13,9 @@ function llamadaAjax(urlAjax) {
 }
 
 function gestionError(xhr, ajaxOptions, thrownError){
-  
+  //se puede mirar thrownError para distinguir entre varios errores como un timeout
+  //si falla el parseo es lo que nos interesa ya que el servidor está devolviendo un texto plano.
+  alert(xhr.responseText);
 }
+</script>
 
-
-	
-<script>
