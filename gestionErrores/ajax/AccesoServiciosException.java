@@ -1,8 +1,11 @@
 package com.bbva.khvd.front.util;
 
+/*
+ * Ejemplo de clase. Podemos aceptar todo tipo de excepciones
+ */
 public class AccesoServiciosException extends Exception {
-
-  public AccesoServiciosException(WebApplicationException e) {
+	
+	public AccesoServiciosException(WebApplicationException e) {
 		super(e);
 	}
 	
