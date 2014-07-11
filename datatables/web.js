@@ -89,3 +89,12 @@ function cargaColumnas(){
 	});
 	return columns;
 }
+
+
+function columnaNormalizado(data, type, full){
+	return "";
+}
+
+function columnaAcciones(data, type, full){
+	return "";
+}
