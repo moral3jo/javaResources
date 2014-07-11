@@ -34,17 +34,17 @@ function initDatatable(){
 	
 	//sobreescribimos llamada ajax para controlar errores
 	options.fnServerData = function ( sSource, aoData, fnCallback, oSettings ) {
-    oSettings.jqXHR = $.ajax( {
-      "dataType": 'json',
-      "type": "GET",
-      "url": sSource,
-      "data": aoData,
-      "success": fnCallback,
-      "cache": false,
-      "error": function(jqXHR, textStatus, errorThrown) {    
-        gestionDeError(jqXHR.responseText);            
-      }
-    });
+		oSettings.jqXHR = $.ajax( {
+			"dataType": 'json',
+			"type": "GET",
+			"url": sSource,
+			"data": aoData,
+			"success": fnCallback,
+			"cache": false,
+			"error": function(jqXHR, textStatus, errorThrown) {    
+	    	    gestionDeError(jqXHR.responseText);            
+      		}
+    	});
 	};
 	
 	//quitar loading manualmente de tabla 
@@ -60,8 +60,8 @@ function initDatatable(){
 }
 
 cargaParametrosExtra = function ( aoData ) {
-  aoData.push( { "name": "nombreCampoEstatico", "value": "1" } );
-  aoData.push( { "name": "nombreCampoDinamico", "value": $("#campoPais").val() } );
+	aoData.push( { "name": "nombreCampoEstatico", "value": "1" } );
+	aoData.push( { "name": "nombreCampoDinamico", "value": $("#campoPais").val() } );
 }
 
 
@@ -70,6 +70,22 @@ function terminadaCarga(){
 }
 
 function cargaColumnas(){
-  var columns = [];
-  return columns;
+	var columns = [];
+	$(ths).each(function() {
+	  	if($(this).attr('col')) {
+  			//Recupero atributo col
+			var nombreColumna = $(this).attr('col');
+			var title = $(this).attr('col');
+			if(nombreColumna === "empty"){
+				nombreColumna = null;
+			}
+			columns.push( {
+				"title" : title,
+				"mData" : nombreColumna,
+				"mRender": eval($(this).attr('render')),
+				"sClass": $(this).attr('classCel')
+			} );
+		}
+	});
+	return columns;
 }
