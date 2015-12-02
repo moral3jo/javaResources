@@ -1,12 +1,12 @@
 var table;
 
 $(document).ready(function(){
-  lanzarBusqueda();
+	lanzarBusqueda();
 });
 
 
 function lanzarBusqueda(){
-  if(table==undefined){
+	if(table==undefined){
 		initDatatable();
 	}else{
 		table.fnDraw();
@@ -14,18 +14,31 @@ function lanzarBusqueda(){
 }
 
 function initDatatable(){
-  var options = {
-    "sPaginationType": "full_numbers",
-    "bDestroy": true,
-    "bProcessing": false,
-    "oLanguage": {"sUrl": $("#datatables_idioma").val() },
-    "bServerSide" : true,
-    "sServerMethod" : "GET",
-    "sAjaxSource" : $("#url").val()
+	//parametros iniciales
+	var options = {
+		"sPaginationType": "full_numbers",
+		"bDestroy": true,
+		"bProcessing": false,
+		"oLanguage": {"sUrl": $("#datatables_idioma").val() }, //sacamos de campo url de jsp multiidoma
+		"bServerSide" : true,
+		"sServerMethod" : "GET",
+		"sAjaxSource" : $("#url").val(),
+		"drawCallback": function( settings ) {
+			console.log("drawCallback...");
+		}//, //ojo! array en ie8 si termina en coma falla
+		//"bFilter": false, //desactiva campo busqueda
+		//"orderMulti": false, //evita busquedas multiples pulsando shift
+		//"pageLength": $("#registrosPorPaginaDatatables").val() //registros por página sale de campo
 	};
 
 	options.aoColumns = cargaColumnas();
+	//opc1 enviar parametros extras - solo usar 1
 	options.fnServerParams = cargaParametrosExtra;
+	//opc2 enviar parametros extras - solo usar 1
+	options.data = function (d) {
+	                d.fechadesde = $("#fechadesde").val();
+	                d.fechahasta = $("#fechahasta").val();
+				}
 
 	options.fnDrawCallback = function( oSettings,json ) {
 		terminadaCarga();
@@ -71,30 +84,29 @@ function terminadaCarga(){
 
 function cargaColumnas(){
 	var columns = [];
-	$(ths).each(function() {
-	  	if($(this).attr('col')) {
-  			//Recupero atributo col
-			var nombreColumna = $(this).attr('col');
-			var title = $(this).attr('col');
-			if(nombreColumna === "empty"){
-				nombreColumna = null;
-			}
-			columns.push( {
-				"title" : title,
-				"mData" : nombreColumna,
-				"mRender": eval($(this).attr('render')),
-				"sClass": $(this).attr('classCel')
-			} );
+	//uso los th para indicar parametros especificos por filas
+	var columnName = $("#tickets").find('th');
+	$(columnName).each(function(){
+		var propiedades = {};
+		propiedades['bSortable']=true;
+		if(($(this).attr('mRender')!="")){
+			propiedades['mRender']=eval($(this).attr('mRender'));
 		}
+		propiedades['data']=$(this).attr('data');
+		propiedades['title']=$(this).attr('title');
+		propiedades['className']=$(this).attr('className');
+		columns.push(propiedades);
 	});
 	return columns;
 }
 
 
 function columnaNormalizado(data, type, full){
-	return "";
-}
-
-function columnaAcciones(data, type, full){
-	return "";
+	if(type=="display"){
+		//aqui formateamos el contenido de la celda
+		return '<div title="'+data+'">'+recortarString(data,25)+'</div>';
+	}else{
+		//esto se devolverá en el resto de casos como por ejemplo cuando ordenamos
+		return data;
+	}
 }
